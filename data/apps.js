@@ -24,17 +24,6 @@ const NIYAN_APPS = [
   },
 
   {
-    id:          "lottopick",
-    name:        "LottoPick",
-    icon:        "assets/images/lottopick.png",
-    description: "",
-    playUrl:     "",
-    privacyUrl:  "privacy-lottopick.html",
-    glowColor:   "purple",
-    status:      "published",
-  },
-
-  {
     id:          "tenant-manager",
     name:        "Tenant Manager",
     icon:        "assets/images/tenant-manager.png",
