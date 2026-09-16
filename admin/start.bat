@@ -14,8 +14,9 @@ if not exist "node_modules" (
 )
 
 echo  Starting App Manager server...
-echo  Open your browser at: http://localhost:3000/admin
+echo  Opening browser at: http://localhost:3000/admin
 echo  Press Ctrl+C to stop.
 echo.
+start http://localhost:3000/admin
 node server.js
 pause

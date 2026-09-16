@@ -678,6 +678,46 @@
 </head>
 <body>
 
+  <!-- ── Server-required warning (shown only when opened as file://) ── -->
+  <div id="server-warning" style="
+    display:none; position:fixed; inset:0; z-index:9999;
+    background:#08101e;
+    align-items:center; justify-content:center;
+    font-family:'Outfit',sans-serif;
+  ">
+    <div style="
+      max-width:520px; width:90%; text-align:center;
+      border:1px solid rgba(212,160,23,.4);
+      border-radius:20px; padding:3rem 2.5rem;
+      background:#0d1a2e;
+    ">
+      <div style="font-size:3rem; margin-bottom:1rem;">⚠️</div>
+      <h2 style="color:#e0e6ec; font-size:1.3rem; font-weight:700; margin-bottom:.75rem;">
+        Server not running
+      </h2>
+      <p style="color:#8fa0b8; font-size:.95rem; line-height:1.7; margin-bottom:1.5rem;">
+        The App Manager must be opened through the local server —
+        not by opening the HTML file directly.
+      </p>
+      <div style="
+        background:#060d18; border-radius:10px; padding:1.25rem 1.5rem;
+        text-align:left; margin-bottom:1.75rem;
+        border:1px solid rgba(255,255,255,.07);
+      ">
+        <p style="color:#8fa0b8; font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.6rem;">How to start the server</p>
+        <p style="color:#d4a017; font-family:'JetBrains Mono',monospace; font-size:.88rem; line-height:2;">
+          1. Open the <code style="color:#fff;">admin\</code> folder<br/>
+          2. Double-click <code style="color:#fff;">start.bat</code><br/>
+          3. Open your browser at:<br/>
+          &nbsp;&nbsp;&nbsp;<strong style="color:#26a87e;">http://localhost:3000/admin</strong>
+        </p>
+      </div>
+      <p style="color:#8fa0b8; font-size:.8rem;">
+        Or in a terminal: <code style="color:#d4a017;">cd admin &amp;&amp; npm start</code>
+      </p>
+    </div>
+  </div>
+
   <!-- ── Top Bar ── -->
   <header class="topbar">
     <img src="/preview/icon.png" alt="Niyan Tech" class="topbar-logo" />
@@ -862,6 +902,13 @@
        Boot
        ═══════════════════════════════════════════════════════════ */
     document.addEventListener('DOMContentLoaded', async () => {
+      /* Detect file:// protocol — server is required */
+      if (location.protocol === 'file:') {
+        const warn = document.getElementById('server-warning');
+        if (warn) warn.style.display = 'flex';
+        return; /* abort — no server to talk to */
+      }
+
       await loadApps();
       setupIconUpload();
       setupStatusToggle();

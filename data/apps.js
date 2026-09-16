@@ -55,7 +55,7 @@ const NIYAN_APPS = [
   {
     id:          'status-saver',
     name:        'Status Saver',
-    icon:        'assets/images/status-saver.jpg',
+    icon:        'assets/images/status-saver.png',
     description: '',   // ← Fill in: describe what Status Saver does
     playUrl:     '',   // ← Fill in: actual Google Play URL
     privacyUrl:  'privacy-status-saver.html',
@@ -67,7 +67,7 @@ const NIYAN_APPS = [
   {
     id:          'lottopick',
     name:        'LottoPick',
-    icon:        'assets/images/lottopick.jpg',
+    icon:        'assets/images/lottopick.png',
     description: '',   // ← Fill in: describe what LottoPick does
     playUrl:     '',   // ← Fill in: actual Google Play URL
     privacyUrl:  'privacy-lottopick.html',
@@ -79,7 +79,7 @@ const NIYAN_APPS = [
   {
     id:          'tenant-manager',
     name:        'Tenant Manager',
-    icon:        'assets/images/tenant-manager.jpg',
+    icon:        'assets/images/tenant-manager.png',
     description: '',   // ← Fill in: describe what Tenant Manager does
     playUrl:     '',   // ← Fill in: actual Google Play URL
     privacyUrl:  'privacy-tenant-manager.html',
