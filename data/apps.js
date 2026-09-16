@@ -18,7 +18,7 @@ const NIYAN_APPS = [
     icon:        "assets/images/status-saver.png",
     description: "",
     playUrl:     "",
-    privacyUrl:  "privacy-status-saver.html",
+    privacyUrl:  "https://niyantech-nyn.github.io/statussaver-privacy-policy/privacy-policy.html",
     glowColor:   "green",
     status:      "published",
   },
