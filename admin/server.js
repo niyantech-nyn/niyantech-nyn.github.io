@@ -149,9 +149,13 @@ app.post('/api/git-commit', (req, res) => {
 /** Read NIYAN_APPS from data/apps.js using Node vm (safe eval) */
 function readApps() {
   const code = fs.readFileSync(APPS_JS_PATH, 'utf8');
-  const ctx  = Object.create(null);
-  vm.runInNewContext(code, ctx);
-  return Array.isArray(ctx.NIYAN_APPS) ? ctx.NIYAN_APPS : [];
+  try {
+    const result = vm.runInNewContext(code + '\n;NIYAN_APPS;', Object.create(null));
+    return Array.isArray(result) ? result : [];
+  } catch (err) {
+    console.error('Error reading apps.js:', err.message);
+    return [];
+  }
 }
 
 /** Write apps array back to data/apps.js, preserving the JS module format */
