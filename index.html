@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Niyan Tech – Independent Mobile App Developer</title>
+  <meta name="description" content="Niyan Tech is an independent mobile app developer crafting high-quality Android apps. Browse our apps: Status Saver, LottoPick, and Tenant Manager." />
+  <meta name="keywords" content="Niyan Tech, mobile app developer, Android apps, Status Saver, LottoPick, Tenant Manager" />
+  <meta name="author" content="Niyan Tech" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Niyan Tech – Independent Mobile App Developer" />
+  <meta property="og:description" content="Crafting high-quality Android apps. Browse Status Saver, LottoPick, and Tenant Manager." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icon.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="icon.png" />
+  <link rel="apple-touch-icon" href="icon.png" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <header class="nav-bar" id="nav-bar">
+    <div class="container nav-inner">
+      <a href="#home" class="nav-logo" aria-label="Niyan Tech Home">
+        <img src="icon.png" alt="Niyan Tech Logo" class="nav-logo-img" />
+        <span class="nav-logo-text">Niyan<span class="gold">Tech</span></span>
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav-links" id="nav-links" role="navigation" aria-label="Main navigation">
+        <a href="#home"    class="nav-link">Home</a>
+        <a href="#apps"    class="nav-link">Apps</a>
+        <a href="#support" class="nav-link">Support</a>
+        <a href="#privacy" class="nav-link">Privacy</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── HERO ── -->
+  <section class="hero" id="home">
+    <div class="hero-bg-particles" aria-hidden="true">
+      <div class="particle p1"></div>
+      <div class="particle p2"></div>
+      <div class="particle p3"></div>
+      <div class="particle p4"></div>
+      <div class="particle p5"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-badge">Independent Developer</div>
+      <img src="icon.png" alt="Niyan Tech Logo" class="hero-logo" />
+      <h1 class="hero-title">
+        <span class="hero-title-brand">Niyan Tech</span>
+        <span class="hero-title-sub">Innovate · Connect · Empower</span>
+      </h1>
+      <p class="hero-desc">
+        Crafting high-quality Android apps designed to make everyday life simpler, smarter, and more efficient.
+      </p>
+      <div class="hero-cta-group">
+        <a href="#apps"    class="btn btn-primary">Explore Our Apps</a>
+        <a href="#support" class="btn btn-outline">Get Support</a>
+      </div>
+    </div>
+    <div class="hero-scroll-indicator" aria-hidden="true">
+      <div class="scroll-dot"></div>
+    </div>
+  </section>
+
+  <!-- ── STATS ── -->
+  <section class="stats-strip">
+    <div class="container stats-grid">
+      <div class="stat-item">
+        <span class="stat-num" id="stat-app-count">—</span>
+        <span class="stat-label">Published Apps</span>
+      </div>
+      <div class="stat-divider" aria-hidden="true"></div>
+      <div class="stat-item">
+        <span class="stat-num">Android</span>
+        <span class="stat-label">Platform</span>
+      </div>
+      <div class="stat-divider" aria-hidden="true"></div>
+      <div class="stat-item">
+        <span class="stat-num">Free</span>
+        <span class="stat-label">to Download</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── APPS ──
+       Cards are injected dynamically from data/apps.js
+  ── -->
+  <section class="apps" id="apps">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Our Portfolio</span>
+        <h2 class="section-title">Our Apps</h2>
+        <p class="section-desc">Explore our collection of thoughtfully built Android applications available on Google Play.</p>
+      </div>
+      <!-- Populated by main.js -->
+      <div class="apps-grid" id="apps-grid" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- ── SUPPORT ── -->
+  <section class="support" id="support">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">We're Here</span>
+        <h2 class="section-title">Support &amp; Contact</h2>
+        <p class="section-desc">Have a question, found a bug, or need help with one of our apps? We'd love to hear from you.</p>
+      </div>
+
+      <div class="support-grid">
+        <div class="support-card" id="support-email">
+          <div class="support-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+          </div>
+          <h3>Email Support</h3>
+          <p>Send us an email and we'll respond within 24–48 hours.</p>
+          <a href="mailto:niyantech.in@gmail.com" class="support-link" id="email-link">niyantech.in@gmail.com</a>
+        </div>
+
+        <div class="support-card" id="support-play">
+          <div class="support-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <h3>Play Store Reviews</h3>
+          <p>Rate our apps and leave a review on the Google Play Store.</p>
+          <a href="https://play.google.com/store/apps/developer?id=Niyan+Tech" class="support-link" target="_blank" rel="noopener noreferrer" id="play-developer-link">View on Google Play</a>
+        </div>
+
+        <div class="support-card" id="support-feedback">
+          <div class="support-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3>Feature Requests &amp; Feedback</h3>
+          <p>Got an idea to improve our apps? We're always listening.</p>
+          <a href="mailto:niyantech.in@gmail.com" class="support-link" id="feedback-link">niyantech.in@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRIVACY POLICIES ──
+       Cards are injected dynamically from data/apps.js
+  ── -->
+  <section class="privacy" id="privacy">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Transparency</span>
+        <h2 class="section-title">Privacy Policies</h2>
+        <p class="section-desc">We respect your privacy. Read the dedicated privacy policy for each of our apps.</p>
+      </div>
+      <!-- Populated by main.js -->
+      <div class="privacy-links-grid" id="privacy-links-grid" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ──
+       App links and privacy links columns are injected from data/apps.js
+  ── -->
+  <footer class="footer" id="footer">
+    <div class="container footer-inner">
+
+      <!-- Brand -->
+      <div class="footer-brand">
+        <img src="icon.png" alt="Niyan Tech" class="footer-logo" />
+        <div>
+          <p class="footer-name">Niyan<span class="gold">Tech</span></p>
+          <p class="footer-tagline">Innovate · Connect · Empower</p>
+        </div>
+      </div>
+
+      <!-- Nav columns (populated by main.js for Apps & Privacy cols) -->
+      <nav class="footer-nav" id="footer-nav" aria-label="Footer navigation">
+
+        <!-- Apps column — populated by JS -->
+        <div class="footer-nav-col" id="footer-col-apps">
+          <h4>Apps</h4>
+          <!-- Links inserted by main.js -->
+        </div>
+
+        <!-- Privacy column — populated by JS -->
+        <div class="footer-nav-col" id="footer-col-privacy">
+          <h4>Privacy Policies</h4>
+          <!-- Links inserted by main.js -->
+        </div>
+
+        <!-- Contact column — static -->
+        <div class="footer-nav-col" id="footer-col-contact">
+          <h4>Contact</h4>
+          <a href="mailto:niyantech.in@gmail.com">niyantech.in@gmail.com</a>
+          <a href="https://play.google.com/store/apps/developer?id=Niyan+Tech" target="_blank" rel="noopener noreferrer">Google Play Developer Page</a>
+        </div>
+
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p class="footer-copy">&copy; <span id="year"></span> Niyan Tech. All rights reserved.</p>
+        <p class="footer-made">Made with ♥ for Android users worldwide.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- App data config — must come BEFORE main.js -->
+  <script src="data/apps.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

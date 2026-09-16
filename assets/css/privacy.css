@@ -1,0 +1,7 @@
+/* ─────────────────────────────────────────
+   Niyan Tech – Privacy Policy Shared Styles
+   Included via <link> on each privacy page
+   ───────────────────────────────────────── */
+
+/* Import base so privacy pages are self-contained */
+@import url('style.css');

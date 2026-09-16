@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>App Manager — Niyan Tech</title>
+  <link rel="icon" type="image/png" href="/preview/icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    img { display: block; max-width: 100%; }
+    button, input, textarea, select { font: inherit; }
+
+    /* ── Tokens ── */
+    :root {
+      --navy-950: #060d18;
+      --navy-900: #08101e;
+      --navy-800: #0d1a2e;
+      --navy-700: #112240;
+      --navy-600: #162d50;
+      --gold:     #d4a017;
+      --gold-dim: rgba(212,160,23,.15);
+      --gold-border: rgba(212,160,23,.3);
+      --silver:   #e0e6ec;
+      --muted:    #8fa0b8;
+      --green:    #26a87e;
+      --red:      #e05252;
+      --radius:   10px;
+      --radius-lg: 16px;
+      --trans:    .25s cubic-bezier(.4,0,.2,1);
+      --sidebar-w: 340px;
+    }
+
+    /* ── Body / Layout ── */
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy-900);
+      color: var(--silver);
+      display: grid;
+      grid-template-rows: 56px 1fr;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ── Top Bar ── */
+    .topbar {
+      grid-column: 1 / -1;
+      background: var(--navy-950);
+      border-bottom: 1px solid var(--gold-border);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0 1.5rem;
+    }
+    .topbar-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+    .topbar-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--silver);
+    }
+    .topbar-title span { color: var(--gold); }
+    .topbar-subtitle {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-left: 0.25rem;
+    }
+    .topbar-spacer { flex: 1; }
+    .topbar-hint {
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: var(--navy-700);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 6px;
+      padding: 0.3rem 0.75rem;
+    }
+    .topbar-hint code {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--gold);
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      background: var(--navy-800);
+      border-right: 1px solid rgba(255,255,255,.06);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .sidebar-header {
+      padding: 1rem 1.25rem 0.75rem;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .sidebar-heading {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .btn-add {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--gold), #f0c040);
+      color: #08101e;
+      border: none;
+      border-radius: 8px;
+      padding: .35rem .85rem;
+      cursor: pointer;
+      transition: var(--trans);
+    }
+    .btn-add:hover { opacity: .88; transform: translateY(-1px); }
+
+    /* App list */
+    .app-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: .5rem .75rem;
+    }
+    .app-list::-webkit-scrollbar { width: 4px; }
+    .app-list::-webkit-scrollbar-track { background: transparent; }
+    .app-list::-webkit-scrollbar-thumb { background: var(--gold-border); border-radius: 4px; }
+
+    .app-item {
+      display: flex;
+      align-items: center;
+      gap: .85rem;
+      padding: .75rem .85rem;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background var(--trans);
+      position: relative;
+      user-select: none;
+    }
+    .app-item:hover { background: var(--navy-700); }
+    .app-item.active {
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-border);
+    }
+    .app-item-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      object-fit: cover;
+      background: var(--navy-700);
+      flex-shrink: 0;
+    }
+    .app-item-icon-placeholder {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--navy-700);
+      border: 1px dashed var(--gold-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--muted);
+      font-size: 1.2rem;
+    }
+    .app-item-info { flex: 1; min-width: 0; }
+    .app-item-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: .92rem;
+      font-weight: 600;
+      color: var(--silver);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .app-item-status {
+      display: inline-flex;
+      align-items: center;
+      gap: .3rem;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .05em;
+      margin-top: .2rem;
+    }
+    .app-item-status.published { color: var(--green); }
+    .app-item-status.coming-soon { color: var(--gold); }
+    .app-item-status::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .app-item-actions {
+      display: flex;
+      gap: .35rem;
+      opacity: 0;
+      transition: opacity var(--trans);
+    }
+    .app-item:hover .app-item-actions { opacity: 1; }
+    .btn-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: var(--trans);
+    }
+    .btn-icon.edit {
+      background: rgba(212,160,23,.12);
+      color: var(--gold);
+    }
+    .btn-icon.edit:hover { background: rgba(212,160,23,.25); }
+    .btn-icon.del {
+      background: rgba(224,82,82,.12);
+      color: var(--red);
+    }
+    .btn-icon.del:hover { background: rgba(224,82,82,.25); }
+    .btn-icon svg { width: 14px; height: 14px; }
+
+    .empty-list {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    /* ── Main panel ── */
+    .main {
+      overflow-y: auto;
+      padding: 2rem;
+      background: var(--navy-900);
+    }
+    .main::-webkit-scrollbar { width: 5px; }
+    .main::-webkit-scrollbar-track { background: transparent; }
+    .main::-webkit-scrollbar-thumb { background: var(--gold-border); border-radius: 4px; }
+
+    /* Welcome state */
+    .welcome {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 1rem;
+      text-align: center;
+      opacity: .6;
+    }
+    .welcome svg { width: 56px; height: 56px; color: var(--gold); opacity: .4; }
+    .welcome h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--silver);
+    }
+    .welcome p { font-size: .88rem; color: var(--muted); }
+
+    /* Form */
+    .form-panel { max-width: 680px; }
+    .form-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--silver);
+      margin-bottom: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+    .form-title .badge {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-border);
+      color: var(--gold);
+      padding: .2rem .6rem;
+      border-radius: 100px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    .form-group { display: flex; flex-direction: column; gap: .45rem; }
+    .form-group.full { grid-column: 1 / -1; }
+
+    label {
+      font-family: 'Outfit', sans-serif;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    input[type=text],
+    input[type=url],
+    textarea,
+    select {
+      background: var(--navy-800);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: var(--radius);
+      color: var(--silver);
+      padding: .65rem .85rem;
+      font-size: .93rem;
+      transition: border-color var(--trans);
+      width: 100%;
+    }
+    input[type=text]:focus,
+    input[type=url]:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(212,160,23,.12);
+    }
+    input::placeholder, textarea::placeholder { color: rgba(143,160,184,.5); }
+    textarea { resize: vertical; min-height: 90px; }
+    select option { background: var(--navy-800); }
+
+    /* Icon upload */
+    .icon-upload-area {
+      border: 2px dashed var(--gold-border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--trans);
+      background: var(--navy-800);
+      position: relative;
+    }
+    .icon-upload-area:hover,
+    .icon-upload-area.drag-over {
+      border-color: var(--gold);
+      background: var(--gold-dim);
+    }
+    .icon-upload-area input[type=file] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+    .icon-preview-wrap {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .icon-preview {
+      width: 72px;
+      height: 72px;
+      border-radius: 14px;
+      object-fit: cover;
+      background: var(--navy-700);
+      flex-shrink: 0;
+      border: 1px solid rgba(255,255,255,.07);
+    }
+    .icon-upload-text { text-align: left; }
+    .icon-upload-text strong {
+      display: block;
+      font-family: 'Outfit', sans-serif;
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--silver);
+      margin-bottom: .2rem;
+    }
+    .icon-upload-text span {
+      font-size: .78rem;
+      color: var(--muted);
+    }
+    .icon-filename {
+      font-size: .75rem;
+      color: var(--green);
+      margin-top: .3rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .icon-upload-progress {
+      display: none;
+      height: 3px;
+      background: var(--navy-700);
+      border-radius: 3px;
+      margin-top: .6rem;
+      overflow: hidden;
+    }
+    .icon-upload-progress.active { display: block; }
+    .icon-upload-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), #f0c040);
+      border-radius: 3px;
+      animation: progress-slide 1.2s ease-in-out infinite;
+    }
+    @keyframes progress-slide {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(200%); }
+    }
+
+    /* Status toggle */
+    .status-toggle {
+      display: flex;
+      gap: .5rem;
+    }
+    .status-btn {
+      flex: 1;
+      padding: .6rem 1rem;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.1);
+      background: var(--navy-800);
+      color: var(--muted);
+      font-family: 'Outfit', sans-serif;
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--trans);
+      text-align: center;
+    }
+    .status-btn:hover { border-color: rgba(255,255,255,.2); }
+    .status-btn.active.published {
+      background: rgba(38,168,126,.12);
+      border-color: rgba(38,168,126,.5);
+      color: var(--green);
+    }
+    .status-btn.active.coming-soon {
+      background: var(--gold-dim);
+      border-color: var(--gold-border);
+      color: var(--gold);
+    }
+
+    /* Glow color picker */
+    .glow-picker {
+      display: flex;
+      gap: .5rem;
+      flex-wrap: wrap;
+    }
+    .glow-swatch {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform var(--trans), border-color var(--trans);
+    }
+    .glow-swatch:hover { transform: scale(1.15); }
+    .glow-swatch.selected { border-color: #fff; transform: scale(1.2); }
+    .glow-swatch.green  { background: #26a87e; }
+    .glow-swatch.blue   { background: #2563eb; }
+    .glow-swatch.purple { background: #7c4dff; }
+    .glow-swatch.orange { background: #fb923c; }
+    .glow-swatch.teal   { background: #14b8a6; }
+    .glow-swatch.red    { background: #ef4444; }
+
+    /* Form actions */
+    .form-actions {
+      display: flex;
+      gap: .75rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,.07);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .btn-save {
+      font-family: 'Outfit', sans-serif;
+      font-size: .92rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--gold), #f0c040);
+      color: #08101e;
+      border: none;
+      border-radius: var(--radius);
+      padding: .7rem 1.75rem;
+      cursor: pointer;
+      transition: var(--trans);
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .btn-save:hover { transform: translateY(-2px); box-shadow: 0 0 24px rgba(212,160,23,.4); }
+    .btn-save:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+    .btn-cancel {
+      font-family: 'Outfit', sans-serif;
+      font-size: .88rem;
+      font-weight: 600;
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius);
+      padding: .65rem 1.25rem;
+      cursor: pointer;
+      transition: var(--trans);
+    }
+    .btn-cancel:hover { border-color: rgba(255,255,255,.25); color: var(--silver); }
+
+    .form-actions-note {
+      font-size: .75rem;
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    /* Git commit terminal */
+    .git-panel {
+      margin-top: 1.5rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255,255,255,.08);
+      overflow: hidden;
+      display: none;
+    }
+    .git-panel.visible { display: block; }
+    .git-panel-header {
+      background: var(--navy-950);
+      padding: .6rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+    }
+    .git-dots span {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .git-dots span:nth-child(1) { background: #ff5f57; }
+    .git-dots span:nth-child(2) { background: #febc2e; }
+    .git-dots span:nth-child(3) { background: #28c840; }
+    .git-panel-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .72rem;
+      color: var(--muted);
+      margin-left: .25rem;
+    }
+    .git-output {
+      background: #04090f;
+      padding: 1rem 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .8rem;
+      line-height: 1.7;
+      color: #a8d8a8;
+      white-space: pre-wrap;
+      word-break: break-all;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .git-output.error { color: #e88; }
+
+    /* Delete confirm modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.7);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      display: none;
+    }
+    .modal-overlay.visible { display: flex; }
+    .modal {
+      background: var(--navy-800);
+      border: 1px solid var(--gold-border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      max-width: 380px;
+      width: 90%;
+      text-align: center;
+    }
+    .modal h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--silver);
+      margin-bottom: .5rem;
+    }
+    .modal p { font-size: .9rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .modal-name {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      color: var(--red);
+    }
+    .modal-actions { display: flex; gap: .75rem; justify-content: center; }
+    .btn-del-confirm {
+      font-family: 'Outfit', sans-serif;
+      font-size: .88rem;
+      font-weight: 700;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      padding: .6rem 1.5rem;
+      cursor: pointer;
+      transition: var(--trans);
+    }
+    .btn-del-confirm:hover { opacity: .85; }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+      z-index: 200;
+    }
+    .toast {
+      font-family: 'Outfit', sans-serif;
+      font-size: .88rem;
+      font-weight: 600;
+      padding: .7rem 1.2rem;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,.5);
+      animation: slide-in .3s ease;
+    }
+    @keyframes slide-in {
+      from { transform: translateX(100%); opacity: 0; }
+      to   { transform: translateX(0);    opacity: 1; }
+    }
+    .toast.success { background: rgba(38,168,126,.9); color: #fff; }
+    .toast.error   { background: rgba(224,82,82,.9);  color: #fff; }
+    .toast.info    { background: rgba(212,160,23,.9); color: #08101e; }
+
+    /* Spinner */
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(255,255,255,.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+    .spinner.dark {
+      border: 2px solid rgba(8,16,30,.3);
+      border-top-color: #08101e;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      body {
+        grid-template-columns: 1fr;
+        grid-template-rows: 56px 280px 1fr;
+        overflow: auto;
+      }
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,.06);
+      }
+      .main { overflow-y: visible; }
+    }
+    @media (max-width: 600px) {
+      .form-grid { grid-template-columns: 1fr; }
+      body { grid-template-rows: 56px 240px 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Top Bar ── -->
+  <header class="topbar">
+    <img src="/preview/icon.png" alt="Niyan Tech" class="topbar-logo" />
+    <span class="topbar-title">Niyan<span>Tech</span></span>
+    <span class="topbar-subtitle">/ App Manager</span>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-hint">
+      After saving, run <code>git push</code> to publish live
+    </div>
+  </header>
+
+  <!-- ── Sidebar: App List ── -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-heading">Apps</span>
+      <button class="btn-add" id="btn-add-new" onclick="openForm(null)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="12" height="12"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add New App
+      </button>
+    </div>
+    <div class="app-list" id="app-list">
+      <div class="empty-list" id="empty-list" style="display:none">
+        No apps yet.<br/>Click <strong>Add New App</strong> to start.
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Main Panel ── -->
+  <main class="main" id="main">
+
+    <!-- Welcome state (shown when nothing is selected) -->
+    <div class="welcome" id="welcome-state">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="3" y="3" width="7" height="7" rx="1"/>
+        <rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="14" y="14" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/>
+      </svg>
+      <h2>Select an app to edit, or add a new one</h2>
+      <p>All changes are saved to <code style="color:var(--gold);font-size:.85em">data/apps.js</code> and committed with git.</p>
+    </div>
+
+    <!-- Form panel (shown when adding/editing) -->
+    <div class="form-panel" id="form-panel" style="display:none">
+
+      <div class="form-title">
+        <span id="form-heading">Add New App</span>
+        <span class="badge" id="form-badge">NEW</span>
+      </div>
+
+      <form id="app-form" autocomplete="off">
+        <input type="hidden" id="field-edit-index" value="-1" />
+
+        <div class="form-grid">
+
+          <!-- App Name -->
+          <div class="form-group full">
+            <label for="field-name">App Name *</label>
+            <input type="text" id="field-name" placeholder="e.g. Status Saver" required />
+          </div>
+
+          <!-- Icon Upload -->
+          <div class="form-group full">
+            <label>App Icon</label>
+            <div class="icon-upload-area" id="icon-drop-zone">
+              <input type="file" id="field-icon-file" accept="image/*" />
+              <div class="icon-preview-wrap">
+                <img id="icon-preview-img"
+                     src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Crect width='72' height='72' rx='14' fill='%23112240'/%3E%3C/svg%3E"
+                     class="icon-preview" alt="Icon preview" />
+                <div class="icon-upload-text">
+                  <strong>Click or drag &amp; drop to upload icon</strong>
+                  <span>JPG, PNG, WebP — max 8 MB<br/>Saved to <code style="color:var(--gold);font-size:.85em">assets/images/</code></span>
+                  <div class="icon-filename" id="icon-filename"></div>
+                </div>
+              </div>
+              <div class="icon-upload-progress" id="icon-progress">
+                <div class="icon-upload-progress-bar"></div>
+              </div>
+            </div>
+            <input type="hidden" id="field-icon-path" />
+          </div>
+
+          <!-- Description -->
+          <div class="form-group full">
+            <label for="field-description">Description</label>
+            <textarea id="field-description" placeholder="Write a short, accurate description of what this app does."></textarea>
+          </div>
+
+          <!-- Google Play URL -->
+          <div class="form-group full">
+            <label for="field-play-url">Google Play URL</label>
+            <input type="url" id="field-play-url" placeholder="https://play.google.com/store/apps/details?id=com.niyantech.yourapp" />
+          </div>
+
+          <!-- Privacy Policy URL -->
+          <div class="form-group full">
+            <label for="field-privacy-url">Privacy Policy File / URL</label>
+            <input type="text" id="field-privacy-url" placeholder="privacy-your-app.html" />
+          </div>
+
+          <!-- Status -->
+          <div class="form-group">
+            <label>Status</label>
+            <div class="status-toggle" id="status-toggle">
+              <button type="button" class="status-btn active published" data-status="published">
+                ● Published
+              </button>
+              <button type="button" class="status-btn coming-soon" data-status="coming-soon">
+                ◑ Coming Soon
+              </button>
+            </div>
+            <input type="hidden" id="field-status" value="published" />
+          </div>
+
+          <!-- Glow Color -->
+          <div class="form-group">
+            <label>Card Glow Colour</label>
+            <div class="glow-picker" id="glow-picker">
+              <div class="glow-swatch blue selected"   data-color="blue"   title="Blue"></div>
+              <div class="glow-swatch green"           data-color="green"  title="Green"></div>
+              <div class="glow-swatch purple"          data-color="purple" title="Purple"></div>
+              <div class="glow-swatch orange"          data-color="orange" title="Orange"></div>
+              <div class="glow-swatch teal"            data-color="teal"   title="Teal"></div>
+              <div class="glow-swatch red"             data-color="red"    title="Red"></div>
+            </div>
+            <input type="hidden" id="field-glow-color" value="blue" />
+          </div>
+
+        </div><!-- /form-grid -->
+
+        <!-- Actions -->
+        <div class="form-actions">
+          <button type="submit" class="btn-save" id="btn-save">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Save &amp; Commit
+          </button>
+          <button type="button" class="btn-cancel" onclick="closeForm()">Cancel</button>
+          <span class="form-actions-note">Commits locally. Run <code style="color:var(--gold);font-size:.9em">git push</code> to publish.</span>
+        </div>
+
+        <!-- Git output terminal -->
+        <div class="git-panel" id="git-panel">
+          <div class="git-panel-header">
+            <div class="git-dots"><span></span><span></span><span></span></div>
+            <span class="git-panel-title">git add . &amp;&amp; git commit</span>
+          </div>
+          <div class="git-output" id="git-output"></div>
+        </div>
+
+      </form>
+    </div><!-- /form-panel -->
+
+  </main>
+
+  <!-- ── Delete Confirm Modal ── -->
+  <div class="modal-overlay" id="delete-modal">
+    <div class="modal">
+      <h3>Delete App?</h3>
+      <p>Are you sure you want to remove <span class="modal-name" id="delete-modal-name"></span>?<br/>This will update <code style="color:var(--gold)">data/apps.js</code> and commit.</p>
+      <div class="modal-actions">
+        <button class="btn-del-confirm" id="btn-del-confirm">Delete &amp; Commit</button>
+        <button class="btn-cancel" onclick="closeDeleteModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Toast Container ── -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script>
+    /* ═══════════════════════════════════════════════════════════
+       State
+       ═══════════════════════════════════════════════════════════ */
+    let apps       = [];   // current app array from server
+    let editIndex  = -1;   // -1 = add new, >=0 = editing
+    let deleteIndex = -1;  // pending delete
+
+    const GLOW_COLORS = ['blue','green','purple','orange','teal','red'];
+
+    /* ═══════════════════════════════════════════════════════════
+       Boot
+       ═══════════════════════════════════════════════════════════ */
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadApps();
+      setupIconUpload();
+      setupStatusToggle();
+      setupGlowPicker();
+      setupForm();
+      setupDeleteModal();
+    });
+
+    /* ═══════════════════════════════════════════════════════════
+       Load apps from server
+       ═══════════════════════════════════════════════════════════ */
+    async function loadApps() {
+      try {
+        const res  = await fetch('/api/apps');
+        const data = await res.json();
+        if (!data.success) throw new Error(data.error);
+        apps = data.apps || [];
+        renderAppList();
+      } catch (e) {
+        showToast('Failed to load apps: ' + e.message, 'error');
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       Render app list in sidebar
+       ═══════════════════════════════════════════════════════════ */
+    function renderAppList() {
+      const list  = document.getElementById('app-list');
+      const empty = document.getElementById('empty-list');
+
+      // Remove existing items (keep empty placeholder)
+      list.querySelectorAll('.app-item').forEach(el => el.remove());
+
+      if (apps.length === 0) {
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+
+      apps.forEach((app, i) => {
+        const item = document.createElement('div');
+        item.className = 'app-item' + (i === editIndex ? ' active' : '');
+        item.dataset.index = i;
+
+        const iconEl = app.icon
+          ? `<img src="/preview/${app.icon}" alt="${escHtml(app.name)}" class="app-item-icon" onerror="this.outerHTML='<div class=app-item-icon-placeholder>📱</div>'" />`
+          : `<div class="app-item-icon-placeholder">📱</div>`;
+
+        const statusLabel = app.status === 'coming-soon' ? 'Coming Soon' : 'Published';
+        const statusClass = app.status === 'coming-soon' ? 'coming-soon' : 'published';
+
+        item.innerHTML = `
+          ${iconEl}
+          <div class="app-item-info">
+            <div class="app-item-name">${escHtml(app.name || '(Unnamed)')}</div>
+            <div class="app-item-status ${statusClass}">${statusLabel}</div>
+          </div>
+          <div class="app-item-actions">
+            <button class="btn-icon edit" title="Edit" onclick="event.stopPropagation(); openForm(${i})">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </button>
+            <button class="btn-icon del" title="Delete" onclick="event.stopPropagation(); confirmDelete(${i})">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+            </button>
+          </div>`;
+
+        item.addEventListener('click', () => openForm(i));
+        list.appendChild(item);
+      });
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       Open add/edit form
+       ═══════════════════════════════════════════════════════════ */
+    function openForm(index) {
+      editIndex = index;
+
+      document.getElementById('welcome-state').style.display = 'none';
+      document.getElementById('form-panel').style.display    = 'block';
+      document.getElementById('git-panel').classList.remove('visible');
+      document.getElementById('git-output').textContent = '';
+
+      const app = (index !== null && index >= 0) ? apps[index] : null;
+
+      document.getElementById('form-heading').textContent = app ? 'Edit App' : 'Add New App';
+      document.getElementById('form-badge').textContent   = app ? 'EDIT'     : 'NEW';
+      document.getElementById('field-edit-index').value   = index !== null ? index : -1;
+
+      /* Populate fields */
+      document.getElementById('field-name').value        = app?.name        || '';
+      document.getElementById('field-description').value = app?.description || '';
+      document.getElementById('field-play-url').value    = app?.playUrl     || '';
+      document.getElementById('field-privacy-url').value = app?.privacyUrl  || '';
+      document.getElementById('field-icon-path').value   = app?.icon        || '';
+      document.getElementById('field-status').value      = app?.status      || 'published';
+
+      /* Icon preview */
+      const preview = document.getElementById('icon-preview-img');
+      const fname   = document.getElementById('icon-filename');
+      if (app?.icon) {
+        preview.src = `/preview/${app.icon}`;
+        fname.textContent = app.icon;
+      } else {
+        preview.src = blankIcon();
+        fname.textContent = '';
+      }
+
+      /* Status toggle */
+      setStatusToggle(app?.status || 'published');
+
+      /* Glow color */
+      setGlowColor(app?.glowColor || 'blue');
+
+      /* Update sidebar active state */
+      renderAppList();
+
+      /* Scroll form into view */
+      document.getElementById('main').scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function closeForm() {
+      editIndex = -1;
+      document.getElementById('welcome-state').style.display = 'flex';
+      document.getElementById('form-panel').style.display    = 'none';
+      renderAppList();
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       Status Toggle
+       ═══════════════════════════════════════════════════════════ */
+    function setupStatusToggle() {
+      document.querySelectorAll('.status-btn').forEach(btn => {
+        btn.addEventListener('click', () => setStatusToggle(btn.dataset.status));
+      });
+    }
+
+    function setStatusToggle(status) {
+      document.getElementById('field-status').value = status;
+      document.querySelectorAll('.status-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.status === status);
+      });
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       Glow Color Picker
+       ═══════════════════════════════════════════════════════════ */
+    function setupGlowPicker() {
+      document.querySelectorAll('.glow-swatch').forEach(sw => {
+        sw.addEventListener('click', () => setGlowColor(sw.dataset.color));
+      });
+    }
+
+    function setGlowColor(color) {
+      document.getElementById('field-glow-color').value = color;
+      document.querySelectorAll('.glow-swatch').forEach(sw => {
+        sw.classList.toggle('selected', sw.dataset.color === color);
+      });
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       Icon Upload
+       ═══════════════════════════════════════════════════════════ */
+    function setupIconUpload() {
+      const zone    = document.getElementById('icon-drop-zone');
+      const fileInput = document.getElementById('field-icon-file');
+
+      fileInput.addEventListener('change', () => {
+        if (fileInput.files[0]) uploadIcon(fileInput.files[0]);
+      });
+
+      zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+      zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+      zone.addEventListener('drop', e => {
+        e.preventDefault();
+        zone.classList.remove('drag-over');
+        const file = e.dataTransfer.files[0];
+        if (file) uploadIcon(file);
+      });
+    }
+
+    async function uploadIcon(file) {
+      const progress = document.getElementById('icon-progress');
+      const preview  = document.getElementById('icon-preview-img');
+      const fname    = document.getElementById('icon-filename');
+
+      progress.classList.add('active');
+
+      /* Show local preview immediately */
+      const reader = new FileReader();
+      reader.onload = e => { preview.src = e.target.result; };
+      reader.readAsDataURL(file);
+
+      try {
+        const form = new FormData();
+        form.append('icon', file);
+        const res  = await fetch('/api/upload-icon', { method: 'POST', body: form });
+        const data = await res.json();
+        if (!data.success) throw new Error(data.error);
+
+        document.getElementById('field-icon-path').value = data.path;
+        fname.textContent = data.path;
+        preview.src = `/preview/${data.path}`;
+        showToast('Icon uploaded → ' + data.path, 'success');
+      } catch (e) {
+        showToast('Icon upload failed: ' + e.message, 'error');
+      } finally {
+        progress.classList.remove('active');
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       Form Submit — Save & Commit
+       ═══════════════════════════════════════════════════════════ */
+    function setupForm() {
+      document.getElementById('app-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await saveApp();
+      });
+    }
+
+    async function saveApp() {
+      const saveBtn = document.getElementById('btn-save');
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<span class="spinner dark"></span> Saving…';
+
+      try {
+        const idx  = parseInt(document.getElementById('field-edit-index').value, 10);
+        const name = document.getElementById('field-name').value.trim();
+        if (!name) { showToast('App Name is required.', 'error'); return; }
+
+        /* Build updated app object */
+        const appObj = {
+          id:          toSlug(name),
+          name,
+          icon:        document.getElementById('field-icon-path').value.trim(),
+          description: document.getElementById('field-description').value.trim(),
+          playUrl:     document.getElementById('field-play-url').value.trim(),
+          privacyUrl:  document.getElementById('field-privacy-url').value.trim(),
+          glowColor:   document.getElementById('field-glow-color').value,
+          status:      document.getElementById('field-status').value,
+        };
+
+        /* Preserve original id if editing */
+        if (idx >= 0 && apps[idx]) appObj.id = apps[idx].id || appObj.id;
+
+        /* Update local array */
+        const newApps = [...apps];
+        if (idx >= 0) {
+          newApps[idx] = appObj;
+        } else {
+          newApps.push(appObj);
+        }
+
+        /* Save to server → writes data/apps.js */
+        const saveRes = await fetch('/api/apps', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ apps: newApps }),
+        });
+        const saveData = await saveRes.json();
+        if (!saveData.success) throw new Error(saveData.error);
+
+        apps = newApps;
+        editIndex = idx >= 0 ? idx : apps.length - 1;
+
+        showToast(`"${name}" saved to data/apps.js`, 'success');
+
+        /* Git commit */
+        saveBtn.innerHTML = '<span class="spinner dark"></span> Committing…';
+        const msg = idx >= 0 ? `Update app: ${name}` : `Add app: ${name}`;
+        const gitRes  = await fetch('/api/git-commit', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ message: msg }),
+        });
+        const gitData = await gitRes.json();
+
+        const panel  = document.getElementById('git-panel');
+        const output = document.getElementById('git-output');
+        panel.classList.add('visible');
+        output.className = 'git-output' + (gitData.success ? '' : ' error');
+        output.textContent = gitData.output;
+
+        if (gitData.success) {
+          showToast('Git commit done. Run git push to publish.', 'info');
+        } else {
+          showToast('Git commit failed (see terminal below).', 'error');
+        }
+
+        renderAppList();
+
+      } catch (err) {
+        showToast('Error: ' + err.message, 'error');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Save &amp; Commit`;
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       Delete
+       ═══════════════════════════════════════════════════════════ */
+    function setupDeleteModal() {
+      document.getElementById('btn-del-confirm').addEventListener('click', async () => {
+        if (deleteIndex < 0) return;
+
+        const name = apps[deleteIndex]?.name || 'this app';
+        const newApps = apps.filter((_, i) => i !== deleteIndex);
+
+        try {
+          const res  = await fetch('/api/apps', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({ apps: newApps }),
+          });
+          const data = await res.json();
+          if (!data.success) throw new Error(data.error);
+
+          apps = newApps;
+          closeDeleteModal();
+          closeForm();
+          showToast(`"${name}" removed.`, 'info');
+
+          /* Auto-commit deletion */
+          await fetch('/api/git-commit', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({ message: `Remove app: ${name}` }),
+          });
+
+          renderAppList();
+        } catch (e) {
+          showToast('Delete failed: ' + e.message, 'error');
+          closeDeleteModal();
+        }
+        deleteIndex = -1;
+      });
+    }
+
+    function confirmDelete(index) {
+      deleteIndex = index;
+      const name = apps[index]?.name || 'this app';
+      document.getElementById('delete-modal-name').textContent = name;
+      document.getElementById('delete-modal').classList.add('visible');
+    }
+
+    function closeDeleteModal() {
+      deleteIndex = -1;
+      document.getElementById('delete-modal').classList.remove('visible');
+    }
+
+    /* Close modal on overlay click */
+    document.getElementById('delete-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeDeleteModal();
+    });
+
+    /* ═══════════════════════════════════════════════════════════
+       Toast notifications
+       ═══════════════════════════════════════════════════════════ */
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast     = document.createElement('div');
+      toast.className = `toast ${type}`;
+
+      const icon = type === 'success' ? '✓' : type === 'error' ? '✗' : 'ℹ';
+      toast.textContent = `${icon}  ${message}`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.transition = 'opacity .3s, transform .3s';
+        toast.style.opacity    = '0';
+        toast.style.transform  = 'translateX(100%)';
+        setTimeout(() => toast.remove(), 350);
+      }, 4000);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       Helpers
+       ═══════════════════════════════════════════════════════════ */
+    function escHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function toSlug(name) {
+      return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    }
+
+    function blankIcon() {
+      return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Crect width='72' height='72' rx='14' fill='%23112240'/%3E%3C/svg%3E";
+    }
+  </script>
+</body>
+</html>
