@@ -120,39 +120,6 @@ function renderPrivacyGrid() {
   });
 }
 
-/* ═══════════════════════════════════════════════════════════
-   3. RENDER FOOTER COLUMNS
-   ═══════════════════════════════════════════════════════════ */
-function renderFooter() {
-  if (typeof NIYAN_APPS === 'undefined') return;
-
-  const colApps    = document.getElementById('footer-col-apps');
-  const colPrivacy = document.getElementById('footer-col-privacy');
-
-  const publishedApps = NIYAN_APPS.filter((a) => a.status === 'published');
-
-  if (colApps) {
-    const existing = colApps.querySelector('h4');
-    /* Remove old links (keep the <h4>) */
-    [...colApps.querySelectorAll('a')].forEach((el) => el.remove());
-    publishedApps.forEach((app) => {
-      const a = document.createElement('a');
-      a.href = `#app-${app.id}`;
-      a.textContent = app.name;
-      colApps.appendChild(a);
-    });
-  }
-
-  if (colPrivacy) {
-    [...colPrivacy.querySelectorAll('a')].forEach((el) => el.remove());
-    publishedApps.forEach((app) => {
-      const a = document.createElement('a');
-      a.href = app.privacyUrl;
-      a.textContent = `${app.name} Privacy`;
-      colPrivacy.appendChild(a);
-    });
-  }
-}
 
 /* ═══════════════════════════════════════════════════════════
    4. UPDATE STATS COUNT
@@ -291,5 +258,4 @@ document.addEventListener('click', (e) => {
    ═══════════════════════════════════════════════════════════ */
 renderAppsGrid();
 renderPrivacyGrid();
-renderFooter();
 updateStats();
