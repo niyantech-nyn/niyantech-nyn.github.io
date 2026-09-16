@@ -27,9 +27,9 @@ const NIYAN_APPS = [
     id:          "tenant-manager",
     name:        "Tenant Manager",
     icon:        "assets/images/tenant-manager.png",
-    description: "",
-    playUrl:     "",
-    privacyUrl:  "privacy-tenant-manager.html",
+    description: "Tenant Manager is an offline property management app for landlords and property owners. Manage properties, rooms, tenants, rent payments, expenses, reports, and documents — privately and securely from your phone.",
+    playUrl:     "https://play.google.com/store/apps/details?id=com.niyantech.tenantmanager",
+    privacyUrl:  "https://niyantech-nyn.github.io/tenantmanager-privacy-policy/privacy-policy.html",
     glowColor:   "blue",
     status:      "published",
   }
