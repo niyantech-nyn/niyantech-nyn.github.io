@@ -146,17 +146,32 @@ app.post('/api/git-commit', (req, res) => {
    Helpers
    ═══════════════════════════════════════════════════════════ */
 
-/** Read NIYAN_APPS from data/apps.js using Node vm (safe eval) */
+/** Read NIYAN_APPS from data/apps.js using Node vm (safe eval).
+ *  Replaces `const` / `let` with `var` so the sandbox can see the variable. */
 function readApps() {
-  const code = fs.readFileSync(APPS_JS_PATH, 'utf8');
+  let code = fs.readFileSync(APPS_JS_PATH, 'utf8');
+
+  /* Normalise: convert const/let declarations to var so vm sandbox exposes them */
+  code = code.replace(/^\s*const\s+/gm, 'var ').replace(/^\s*let\s+/gm, 'var ');
+
   try {
+    /* Strategy 1: expression at end returns the value directly */
     const result = vm.runInNewContext(code + '\n;NIYAN_APPS;', Object.create(null));
-    return Array.isArray(result) ? result : [];
+    if (Array.isArray(result)) return result;
+  } catch (_) { /* fall through */ }
+
+  try {
+    /* Strategy 2: read from sandbox context (works with var) */
+    const ctx = Object.create(null);
+    vm.runInNewContext(code, ctx);
+    if (Array.isArray(ctx.NIYAN_APPS)) return ctx.NIYAN_APPS;
   } catch (err) {
     console.error('Error reading apps.js:', err.message);
-    return [];
   }
+
+  return [];
 }
+
 
 /** Write apps array back to data/apps.js, preserving the JS module format */
 function writeApps(apps) {
@@ -188,7 +203,7 @@ function writeApps(apps) {
  * ─────────────────────────────────────────────────────────────
  */
 
-const NIYAN_APPS = [
+var NIYAN_APPS = [
 
 ${entries}
 
