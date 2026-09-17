@@ -1,7 +1,5 @@
-# ── Node / Admin tool ──
-admin/node_modules/
-admin/npm-debug.log*
-admin/yarn-error.log*
+# ── Admin tool (local-only, never deployed) ──
+admin/
 
 # ── OS files ──
 .DS_Store
