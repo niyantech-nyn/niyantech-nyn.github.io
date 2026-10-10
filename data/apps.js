@@ -43,6 +43,17 @@ var NIYAN_APPS = [
     privacyUrl:  "https://niyantech-nyn.github.io/lottoPick-privacy-policy/privacy-policy.html",
     glowColor:   "blue",
     status:      "published",
+  },
+
+  {
+    id:          "color-fun",
+    name:        "Color Fun",
+    icon:        "assets/images/colorfun-1791616648745.png",
+    description: "Enjoy coloring 24 geometric pictures, earn XP, unlock new artwork, and save your creations in the Gallery. Customize your experience with 17 languages.",
+    playUrl:     "https://play.google.com/store/apps/details?id=com.niyantech.coloring",
+    privacyUrl:  "https://niyantech-nyn.github.io/privacy-policies/coloring/privacy-policy.html",
+    glowColor:   "blue",
+    status:      "published",
   }
 
 ];
