@@ -37,7 +37,7 @@ var NIYAN_APPS = [
   {
     id:          "lottopick",
     name:        "LottoPick",
-    icon:        "assets/images/lottopick-1791615274737.png",
+    icon:        "assets/images/lottopick.png",
     description: "LottoPick is a lottery analysis app that provides historical draw results, number frequency and gap analysis, simulations, wheeling, expected value calculations, and number-picking tools to help users explore lottery statistics and patterns.",
     playUrl:     "https://play.google.com/store/apps/details?id=com.niyantech.lottopick",
     privacyUrl:  "https://niyantech-nyn.github.io/lottoPick-privacy-policy/privacy-policy.html",
@@ -48,7 +48,7 @@ var NIYAN_APPS = [
   {
     id:          "color-fun",
     name:        "Color Fun",
-    icon:        "assets/images/colorfun-1791616648745.png",
+    icon:        "assets/images/ColorFun.png",
     description: "Enjoy coloring 24 geometric pictures, earn XP, unlock new artwork, and save your creations in the Gallery. Customize your experience with 17 languages.",
     playUrl:     "https://play.google.com/store/apps/details?id=com.niyantech.coloring",
     privacyUrl:  "https://niyantech-nyn.github.io/privacy-policies/coloring/privacy-policy.html",
@@ -59,7 +59,7 @@ var NIYAN_APPS = [
   {
     id:          "word-scramble",
     name:        "Word Scramble",
-    icon:        "assets/images/wordscramble-1791616851201.png",
+    icon:        "assets/images/WordScramble.png",
     description: "Unscramble letters using category hints, solve word puzzles, earn points, and challenge your vocabulary across 15 categories and 300 words.",
     playUrl:     "https://play.google.com/store/apps/details?id=com.niyantech.wordscramble",
     privacyUrl:  "https://niyantech-nyn.github.io/privacy-policies/wordscramble/privacy-policy.html",
