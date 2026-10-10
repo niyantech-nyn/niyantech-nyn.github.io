@@ -34,7 +34,8 @@ Configured in `data/apps.js` (`NIYAN_APPS`):
 │   │   └── main.js         # Renders cards dynamically from data/apps.js, UI animations
 │   └── images/             # Clean app icons (e.g. ColorFun.png, WordScramble.png)
 ├── data/
-│   └── apps.js             # NIYAN_APPS configuration array
+│   ├── apps.js             # NIYAN_APPS configuration array
+│   └── apps-backup.txt     # Human-readable text backup of all app details
 ├── admin/                  # LOCAL ONLY: Express admin dashboard (never deployed)
 │   ├── server.js           # API: /api/apps, /api/images, /api/upload-icon, /api/git-commit
 │   ├── index.html          # Admin UI with icon picker, app editor, commit button

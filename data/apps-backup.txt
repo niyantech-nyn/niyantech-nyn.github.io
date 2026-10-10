@@ -1,0 +1,77 @@
+================================================================================
+NIYAN TECH — APPS BACKUP
+================================================================================
+
+[1] Status Saver
+--------------------------------------------------------------------------------
+App Name:
+Status Saver
+
+Description:
+Status Saver lets you view and save WhatsApp and WhatsApp Business status photos and videos, with direct chat without saving contacts.
+
+Google Play URL:
+https://play.google.com/store/apps/details?id=com.niyantech.statussaver
+
+Privacy Policy File / URL:
+https://niyantech-nyn.github.io/statussaver-privacy-policy/privacy-policy.html
+
+
+[2] Tenant Manager
+--------------------------------------------------------------------------------
+App Name:
+Tenant Manager
+
+Description:
+Tenant Manager is an offline property management app for landlords and property owners. Manage properties, rooms, tenants, rent payments, expenses, reports, and documents — privately and securely from your phone.
+
+Google Play URL:
+https://play.google.com/store/apps/details?id=com.niyantech.tenantmanager
+
+Privacy Policy File / URL:
+https://niyantech-nyn.github.io/tenantmanager-privacy-policy/privacy-policy.html
+
+
+[3] LottoPick
+--------------------------------------------------------------------------------
+App Name:
+LottoPick
+
+Description:
+LottoPick is a lottery analysis app that provides historical draw results, number frequency and gap analysis, simulations, wheeling, expected value calculations, and number-picking tools to help users explore lottery statistics and patterns.
+
+Google Play URL:
+https://play.google.com/store/apps/details?id=com.niyantech.lottopick
+
+Privacy Policy File / URL:
+https://niyantech-nyn.github.io/lottoPick-privacy-policy/privacy-policy.html
+
+
+[4] Color Fun
+--------------------------------------------------------------------------------
+App Name:
+Color Fun
+
+Description:
+Enjoy coloring 24 geometric pictures, earn XP, unlock new artwork, and save your creations in the Gallery. Customize your experience with 17 languages.
+
+Google Play URL:
+https://play.google.com/store/apps/details?id=com.niyantech.coloring
+
+Privacy Policy File / URL:
+https://niyantech-nyn.github.io/privacy-policies/coloring/privacy-policy.html
+
+
+[5] Word Scramble
+--------------------------------------------------------------------------------
+App Name:
+Word Scramble
+
+Description:
+Unscramble letters using category hints, solve word puzzles, earn points, and challenge your vocabulary across 15 categories and 300 words.
+
+Google Play URL:
+https://play.google.com/store/apps/details?id=com.niyantech.wordscramble
+
+Privacy Policy File / URL:
+https://niyantech-nyn.github.io/privacy-policies/wordscramble/privacy-policy.html
