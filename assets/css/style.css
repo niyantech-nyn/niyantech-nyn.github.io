@@ -154,6 +154,7 @@ ul {
 }
 
 .btn-play {
+  margin-top: auto; /* always sits at the bottom of the card */
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
@@ -599,6 +600,7 @@ ul {
   font-size: 0.95rem;
   color: var(--text-secondary);
   line-height: 1.6;
+  flex: 1;           /* grow to fill remaining space, pushing button down */
 }
 
 .app-features {
