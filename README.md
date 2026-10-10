@@ -15,8 +15,10 @@ This is a static website built with plain HTML, CSS, and JavaScript — no frame
 | App | Description |
 |-----|-------------|
 | **Status Saver** | Save WhatsApp statuses to your gallery |
-| **LottoPick** | Random lottery number generator |
 | **Tenant Manager** | Property and tenant management tool |
+| **LottoPick** | Lottery analysis and statistics tool |
+| **Color Fun** | Geometric picture coloring and gallery app |
+| **Word Scramble** | Word puzzle and vocabulary challenge game |
 
 ## Project Structure
 
