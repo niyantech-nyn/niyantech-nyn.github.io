@@ -19,6 +19,7 @@ This is a static website built with plain HTML, CSS, and JavaScript — no frame
 | **LottoPick** | Lottery analysis and statistics tool |
 | **Color Fun** | Geometric picture coloring and gallery app |
 | **Word Scramble** | Word puzzle and vocabulary challenge game |
+| **Chess Master** | Chess match player, game recorder, and interactive learning tool |
 
 ## Project Structure
 

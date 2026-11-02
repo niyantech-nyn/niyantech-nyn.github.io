@@ -16,6 +16,7 @@ Configured in `data/apps.js` (`NIYAN_APPS`):
 3. **LottoPick** — `com.niyantech.lottopick` (Icon: `assets/images/lottopick.png`)
 4. **Color Fun** — `com.niyantech.coloring` (Icon: `assets/images/ColorFun.png`)
 5. **Word Scramble** — `com.niyantech.wordscramble` (Icon: `assets/images/WordScramble.png`)
+6. **Chess Master** — `com.niyantech.chess` (Icon: `assets/images/ChessMaster.png`)
 
 ---
 
