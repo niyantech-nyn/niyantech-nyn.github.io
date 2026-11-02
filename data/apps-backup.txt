@@ -16,7 +16,6 @@ https://play.google.com/store/apps/details?id=com.niyantech.statussaver
 Privacy Policy File / URL:
 https://niyantech-nyn.github.io/statussaver-privacy-policy/privacy-policy.html
 
-
 [2] Tenant Manager
 --------------------------------------------------------------------------------
 App Name:
@@ -30,7 +29,6 @@ https://play.google.com/store/apps/details?id=com.niyantech.tenantmanager
 
 Privacy Policy File / URL:
 https://niyantech-nyn.github.io/tenantmanager-privacy-policy/privacy-policy.html
-
 
 [3] LottoPick
 --------------------------------------------------------------------------------
@@ -46,7 +44,6 @@ https://play.google.com/store/apps/details?id=com.niyantech.lottopick
 Privacy Policy File / URL:
 https://niyantech-nyn.github.io/lottoPick-privacy-policy/privacy-policy.html
 
-
 [4] Color Fun
 --------------------------------------------------------------------------------
 App Name:
@@ -61,7 +58,6 @@ https://play.google.com/store/apps/details?id=com.niyantech.coloring
 Privacy Policy File / URL:
 https://niyantech-nyn.github.io/privacy-policies/coloring/privacy-policy.html
 
-
 [5] Word Scramble
 --------------------------------------------------------------------------------
 App Name:
@@ -75,3 +71,17 @@ https://play.google.com/store/apps/details?id=com.niyantech.wordscramble
 
 Privacy Policy File / URL:
 https://niyantech-nyn.github.io/privacy-policies/wordscramble/privacy-policy.html
+
+[6] Chess Master
+--------------------------------------------------------------------------------
+App Name:
+Chess Master
+
+Description:
+Play chess, improve your skills, learn through lessons, save your matches, and replay games or continue from any move.
+
+Google Play URL:
+https://play.google.com/store/apps/details?id=com.niyantech.chess
+
+Privacy Policy File / URL:
+https://niyantech-nyn.github.io/privacy-policies/chess/privacy-policy.html

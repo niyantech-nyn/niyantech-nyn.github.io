@@ -65,6 +65,17 @@ var NIYAN_APPS = [
     privacyUrl:  "https://niyantech-nyn.github.io/privacy-policies/wordscramble/privacy-policy.html",
     glowColor:   "blue",
     status:      "published",
+  },
+
+  {
+    id:          "chess-master",
+    name:        "Chess Master",
+    icon:        "assets/images/ChessMaster.png",
+    description: "Play chess, improve your skills, learn through lessons, save your matches, and replay games or continue from any move.",
+    playUrl:     "https://play.google.com/store/apps/details?id=com.niyantech.chess",
+    privacyUrl:  "https://niyantech-nyn.github.io/privacy-policies/chess/privacy-policy.html",
+    glowColor:   "blue",
+    status:      "published",
   }
 
 ];
